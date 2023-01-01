@@ -763,11 +763,12 @@ use_current:
 													glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_ALPHA, GL_ADD);
 													break;
 										}
-
+#ifndef __vita__	
 										glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);							// activate reflection mapping
 										glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 										glEnable(GL_TEXTURE_GEN_S);
 										glEnable(GL_TEXTURE_GEN_T);
+#endif
 										texGen = true;
 									}
 								}
@@ -877,13 +878,16 @@ go_here:
 	{
 		OGL_ActiveTextureUnit(GL_TEXTURE1);			// turn off textureing for multi-texture layer 2 since it isnt needed anymore
 		OGL_DisableTexture2D();
+#ifndef __vita__
 		glDisable(GL_TEXTURE_GEN_S);
 		glDisable(GL_TEXTURE_GEN_T);
-
+#endif
 		OGL_ActiveTextureUnit(GL_TEXTURE0);			// make sure #0 is active when we leave
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+#ifndef __vita__		
 		glDisable(GL_TEXTURE_GEN_S);
 		glDisable(GL_TEXTURE_GEN_T);
+#endif
 	}
 
 }

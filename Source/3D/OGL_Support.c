@@ -549,9 +549,10 @@ OGLStyleDefType *styleDefPtr = &setupDefPtr->styles;
 	OGL_CheckError();
 
 		/* ANISOTRIPIC FILTERING */
-
+#ifndef __vita__
 	if (gDoAnisotropy)
 		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &gMaxAnisotropy);
+#endif
 	OGL_CheckError();
 }
 
@@ -560,6 +561,7 @@ OGLStyleDefType *styleDefPtr = &setupDefPtr->styles;
 static void ClearAllBuffersToBlack(void)
 {
 	glClearColor(0,0,0,1);
+#ifndef __vita__
 	if (IsStereoShutter())
 	{
 		glDrawBuffer(GL_BACK_LEFT);
@@ -575,6 +577,7 @@ static void ClearAllBuffersToBlack(void)
 		OGL_CheckError();
 	}
 	else
+#endif
 	{
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);		// clear buffer
 		SDL_GL_SwapWindow(gSDLWindow);
@@ -708,7 +711,7 @@ void OGL_DrawScene(void (*drawRoutine)(void))
 do_shutter:
 
 			/* SET BUFFER FOR SHUTTER GLASSES */
-
+#ifndef __vita__
 	if (IsStereoShutter())
 	{
 		if (gAnaglyphPass == 0)
@@ -719,7 +722,7 @@ do_shutter:
 		if (OGL_CheckError())
 			DoFatalAlert("OGL_DrawScene: glDrawBuffer()");
 	}
-
+#endif
 				/*****************/
 				/* CLEAR BUFFERS */
 				/*****************/
@@ -959,6 +962,7 @@ do_anaglyph:
 
 static void DrawBlueLine(GLint window_width, GLint window_height)
 {
+#ifndef __vita__
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
 	glDisable(GL_ALPHA_TEST);
@@ -1023,7 +1027,7 @@ static void DrawBlueLine(GLint window_width, GLint window_height)
 
 	if (OGL_CheckError())
 		DoFatalAlert("DrawBlueLine failed");
-
+#endif
 }
 
 
@@ -1763,6 +1767,7 @@ OGLLightDefType	*lights;
 
 GLenum OGL_CheckError_Impl(const char* file, const int line)
 {
+#ifndef __vita__
 	GLenum error = glGetError();
 	if (error != 0)
 	{
@@ -1781,6 +1786,9 @@ GLenum OGL_CheckError_Impl(const char* file, const int line)
 		DoFatalAlert("OpenGL error 0x%x (%s)\nin %s:%d", error, text, file, line);
 	}
 	return error;
+#else
+	return 0;
+#endif
 }
 
 
@@ -1898,7 +1906,9 @@ void OGL_EnableLighting(void)
 	if (!gMyState_Lighting)
 	{
 		gMyState_Lighting = true;
+#ifndef __vita__
 		glEnable(GL_LIGHTING);
+#endif
 	}
 }
 

@@ -461,9 +461,9 @@ long	i;
 	GAME_ASSERT(gNumShards > 0);
 
 			/* SET STATE */
-
+#ifndef __vita__
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-
+#endif
 
 	for (i=0; i < MAX_SHARDS; i++)
 	{
@@ -510,8 +510,9 @@ long	i;
 	gGlobalColorFilter.b =
 	gGlobalTransparency = 1;
     OGL_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#ifndef __vita__
    	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
-
+#endif
 }
 
 

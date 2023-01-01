@@ -421,8 +421,9 @@ OGLBoundingBox	bbox;
 				/* SETUP ENVIRONTMENT */
 
 	OGL_PushState();
+#ifndef __vita__
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);		// we want double sided lighting
-
+#endif
 
 	OGL_SetColor4f(1,1,1,1);										// full white & alpha to start with
 
@@ -542,9 +543,10 @@ drawme:
 			/* RESTORE MODES */
 
 	OGL_PopState();
-	OGL_SetColor4f(1,1,1,1);										// reset this
+	OGL_SetColor4f(1,1,1,1);		// reset this
+#ifndef __vita__
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
-
+#endif
 
 }
 
