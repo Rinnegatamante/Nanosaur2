@@ -223,7 +223,7 @@ target_link_libraries(${GAME_TARGET} ${GAME_LIBRARIES})
 
 # VITA
 if(VITA)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-q -O3 -I$ENV{VITASDK}/arm-vita-eabi/include/SDL2 -fpermissive -fno-optimize-sibling-calls -fsigned-char")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-q -O3 -I$ENV{VITASDK}/arm-vita-eabi/include/SDL2 -fpermissive -fno-optimize-sibling-calls -fsigned-char -IC:/vitasdk/bin/arm-vita-eabi/include/SDL2")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,-q -O3 -I$ENV{VITASDK}/arm-vita-eabi/include/SDL2 -fno-optimize-sibling-calls -fsigned-char")
 
 target_link_libraries(${GAME_TARGET}
@@ -334,7 +334,7 @@ if(VITA)
   ## Create Vita files
   vita_create_self(eboot.bin ${GAME_TARGET})
 
-  vita_create_vpk(Billy.vpk ${VITA_TITLEID} eboot.bin
+  vita_create_vpk(Nanosaur2.vpk ${VITA_TITLEID} eboot.bin
     VERSION ${VITA_VERSION}
     NAME ${VITA_APP_NAME}
     FILE ${CMAKE_SOURCE_DIR}/sce_sys/icon0.png sce_sys/icon0.png

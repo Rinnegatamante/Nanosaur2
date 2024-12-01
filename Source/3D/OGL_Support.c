@@ -596,6 +596,7 @@ static void ClearAllBuffersToBlack(void)
 
 static void OGL_CreateLights(OGLLightDefType *lightDefPtr)
 {
+#ifndef __vita__
 GLfloat	ambient[4];
 
 	gMyState_Lighting = false;
@@ -656,7 +657,7 @@ GLfloat	ambient[4];
 	{
 		glDisable(GL_LIGHT0+i);
 	}
-
+#endif
 }
 
 #pragma mark -
@@ -665,8 +666,12 @@ GLfloat	ambient[4];
 
 void OGL_DrawScene(void (*drawRoutine)(void))
 {
+#ifdef __vita__
+	gGameWindowWidth = 640;
+	gGameWindowHeight = 368;
+#else
 	SDL_GL_GetDrawableSize(gSDLWindow, &gGameWindowWidth, &gGameWindowHeight);
-
+#endif
 
 #if 0
 			/* WHILE WE'RE HERE MAKE SURE OS X DOESNT GO TO SLEEP */
@@ -1728,7 +1733,7 @@ OGLLightDefType	*lights;
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(gWorldToViewMatrix.value);
-
+#ifndef __vita__
 		/* UPDATE LIGHT POSITIONS */
 
 	lights =  &gGameViewInfoPtr->lightList;					// point to light list
@@ -1742,7 +1747,7 @@ OGLLightDefType	*lights;
 		lightVec[3] = 0;									// when w==0, this is a directional light, if 1 then point light
 		glLightfv(GL_LIGHT0+i, GL_POSITION, lightVec);
 	}
-
+#endif
 
 			/* GET VARIOUS CAMERA MATRICES */
 
@@ -1920,7 +1925,9 @@ void OGL_DisableLighting(void)
 	if (gMyState_Lighting)
 	{
 		gMyState_Lighting = false;
+#ifndef __vita__
 		glDisable(GL_LIGHTING);
+#endif
 	}
 }
 
@@ -2137,10 +2144,10 @@ void OGL_DrawString(const char* s, GLint x, GLint y)
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, 640, 480, 0, -10.0, 10.0);
-
+#ifndef __vita__
 	glDisable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
-
+#endif
 //	OGL_DisableTexture2D();
 	OGL_SetColor4f(1,1,1,1);
 

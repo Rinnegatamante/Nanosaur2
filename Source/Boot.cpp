@@ -126,7 +126,11 @@ retryVideo:
 	// Determine initial window size
 	int initialWidth = 640;
 	int initialHeight = 480;
+#ifdef __vita__
+	initialHeight = 368;
+#else
 	GetDefaultWindowSize(display, &initialWidth, &initialHeight);
+#endif
 
 	gSDLWindow = SDL_CreateWindow(
 			"Nanosaur II: Hatchling (v" PROJECT_VERSION ")",
@@ -204,7 +208,7 @@ int main(int argc, char** argv)
 	scePowerSetBusClockFrequency(222);
 	scePowerSetGpuClockFrequency(222);
 	scePowerSetGpuXbarClockFrequency(166);
-	vglInitExtended(2 * 1024 * 1024, 960, 544, 2 * 1024 * 1024, SCE_GXM_MULTISAMPLE_4X);
+	vglInitExtended(2 * 1024 * 1024, 640, 368, 2 * 1024 * 1024, SCE_GXM_MULTISAMPLE_2X);
 	chdir("ux0:data");
 #endif
 
